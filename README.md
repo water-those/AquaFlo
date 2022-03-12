@@ -14,6 +14,9 @@
 
 ### Setup
 
+- To install node modules
+  - `npm install`
+
 #### To run project on a local device (Android or iOS)
 
 - install the Expo Go app on your device
