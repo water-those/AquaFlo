@@ -22,3 +22,8 @@
 - install the Expo Go app on your device
 - run `yarn start` in the root directory of the app
 - scan the QR code from the terminal with your device to run the application
+
+##### Troubleshooting
+
+- If you run into an error that says: "Unable to find expo in this project - have you run yarn / npm install yet?" Try the following:
+  - run `sudo expo update`
