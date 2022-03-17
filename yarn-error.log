@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarnpkg add react-native-safe-area-context@3.3.2
+  /usr/local/bin/node /usr/local/bin/yarnpkg add react-native-maps@0.29.4
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -14,7 +14,7 @@ Platform:
   darwin arm64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/Users/dychung/Documents/GitHub/app/node_modules/@babel/core/node_modules/debug/LICENSE'
+  Error: EACCES: permission denied, unlink '/Users/dychung/Documents/GitHub/app/node_modules/@babel/core/node_modules/debug/package.json'
 
 npm manifest: 
   {

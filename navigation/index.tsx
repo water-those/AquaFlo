@@ -23,19 +23,19 @@ function BottomTabNavigator() {
   return (
     <BottomTab.Navigator initialRouteName="Home">
       <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarLabel: "Home",
-          tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="home" color={color} size={size} />,
-        }}
-      />
-      <BottomTab.Screen
         name="Map"
         component={MapScreen}
         options={{
           tabBarLabel: "Map",
           tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="map" color={color} size={size} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="home" color={color} size={size} />,
         }}
       />
       <BottomTab.Screen
