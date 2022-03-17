@@ -21,7 +21,7 @@ const BottomTab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
   return (
-    <BottomTab.Navigator initialRouteName="Home">
+    <BottomTab.Navigator initialRouteName="Map">
       <BottomTab.Screen
         name="Map"
         component={MapScreen}
