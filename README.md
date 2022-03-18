@@ -28,5 +28,4 @@
 - If you run into an error that says: "Unable to find expo in this project - have you run yarn / npm install yet?" Try the following:
   - run `sudo expo update`
 
-trouble shoot - dayun
 - sudo npm install
