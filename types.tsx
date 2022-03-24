@@ -16,6 +16,6 @@ export type RootStackParamList = {
 
 export type BottomTabParamList = {
   Map: undefined;
-  Home: undefined;
-  Guides: undefined;
+  Repair: undefined;
+  Community: undefined;
 };
