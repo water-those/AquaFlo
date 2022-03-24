@@ -1,9 +1,9 @@
 import { Text, View, StyleSheet } from "react-native";
 
-export default function GuidesScreen() {
+export default function CommunityScreen() {
   return (
     <View style={styles.container}>
-      <Text>Guides Screen!</Text>
+      <Text>Community Screen!</Text>
     </View>
   );
 }

@@ -2,9 +2,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
-import HomeScreen from "../screens/HomeScreen";
+import RepairScreen from "../screens/RepairScreen";
 import MapScreen from "../screens/MapScreen";
-import GuidesScreen from "../screens/GuidesScreen";
+import CommunityScreen from "../screens/CommunityScreen";
 import LoginScreen from "../screens/LoginScreen";
 import { RootStackParamList, BottomTabParamList } from "../types";
 
@@ -49,21 +49,21 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Repair"
+        component={RepairScreen}
         options={{
-          tabBarLabel: "Home",
-          tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="home" color={color} size={size} />,
+          tabBarLabel: "Repair",
+          tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="wrench-outline" color={color} size={size} />,
           headerShown: false,
         }}
       />
       <BottomTab.Screen
-        name="Guides"
-        component={GuidesScreen}
+        name="Community"
+        component={CommunityScreen}
         options={{
-          tabBarLabel: "Guides",
+          tabBarLabel: "Community",
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="file-document-outline" color={color} size={size} />
+            <MaterialCommunityIcons name="comment-multiple-outline" color={color} size={size} />
           ),
           headerShown: false,
         }}
