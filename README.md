@@ -15,7 +15,10 @@
 ### Setup
 
 - To install node modules
+
   - `npm install`
+
+- Add a `.env` file in your root directory for environment variables and secret keys
 
 #### To run project on a local device (Android or iOS)
 
@@ -26,6 +29,8 @@
 ##### Troubleshooting
 
 - If you run into an error that says: "Unable to find expo in this project - have you run yarn / npm install yet?" Try the following:
+
   - run `sudo expo update`
 
-- sudo npm install
+- If you run into a permission or EACCES error while trying to install the node modules
+  - run `sudo npm install`
