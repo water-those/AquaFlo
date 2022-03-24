@@ -1,4 +1,7 @@
-// TabTwoScreen.tsx
+// I followed code from
+// https://dev.to/peterklingelhofer/an-introduction-to-google-maps-in-react-native-expo-1g7d
+// I ended up removing prop types not sure if thats a big deal
+
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Alert } from 'react-native';
 
@@ -13,7 +16,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const SPACE = 0.01;
 
-export default function TabTwoScreen({provider}) {
+export default function MapScreen() {
   const [count, setCount] = useState(0);
   const [region, setRegion] = useState({
     latitude: LATITUDE,
@@ -65,6 +68,7 @@ export default function TabTwoScreen({provider}) {
   ]);
 
   const show = () => {
+    
     markerRefs[0].ref.showCallout();
   };
 
@@ -75,15 +79,15 @@ export default function TabTwoScreen({provider}) {
   return (
     <View style={styles.container}>
       <MapView
-        provider={provider}
         style={styles.map}
-        initialRegion={region}
+        initialRegion={region} 
         zoomTapEnabled={false}
       >
         <Marker
           ref={(ref) => {
             let updateRef = markerRefs;
             updateRef[0].ref = ref;
+            console.log(ref);
             setMarkerRefs(updateRef);
           }}
           coordinate={markers[0].coordinate}
