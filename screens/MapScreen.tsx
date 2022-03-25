@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Alert } from 'react-native';
 
 import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
-import CustomCallout from '../components/CustomCallout';
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -52,123 +51,25 @@ export default function MapScreen() {
     },
   ]);
 
-  const [markerRefs, setMarkerRefs] = useState([
-    {
-      ref: null,
-    },
-    {
-      ref: null,
-    },
-    {
-      ref: null,
-    },
-    {
-      ref: null,
-    },
-  ]);
-
-  const show = () => {
-    
-    markerRefs[0].ref.showCallout();
-  };
-
-  const hide = () => {
-    markerRefs[0].ref.showCallout();
-  };
-
+  // https://stackoverflow.com/questions/58936356/dynamically-rendering-mapview-marker-react-native 
   return (
     <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        initialRegion={region} 
-        zoomTapEnabled={false}
-      >
-        <Marker
-          ref={(ref) => {
-            let updateRef = markerRefs;
-            updateRef[0].ref = ref;
-            console.log(ref);
-            setMarkerRefs(updateRef);
-          }}
-          coordinate={markers[0].coordinate}
-          title="This is a native view"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
-        />
-        <Marker coordinate={markers[1].coordinate}>
-          <Callout style={styles.plainView}>
-            <View>
-              <Text>This is a plain view</Text>
-            </View>
-          </Callout>
-        </Marker>
-        <Marker
-          coordinate={markers[2].coordinate}
-          calloutOffset={{ x: -8, y: 28 }}
-          calloutAnchor={{ x: 0.5, y: 0.4 }}
-          ref={(ref) => {
-            let updateRef = markerRefs;
-            updateRef[1].ref = ref;
-            setMarkerRefs(updateRef);
-          }}
-        >
-          <Callout
-            alphaHitTest
-            tooltip
-            onPress={(e) => {
-              if (
-                e.nativeEvent.action === 'marker-inside-overlay-press' ||
-                e.nativeEvent.action === 'callout-inside-press'
-              ) {
-                return;
-              }
-
-              Alert.alert('callout pressed');
-            }}
-            style={styles.customView}
-          >
-            <CustomCallout>
-              <Text>{`This is a custom callout bubble view ${count}`}</Text>
-              <CalloutSubview
-                onPress={() => {
-                  setCount(count + 1);
-                }}
-                style={[styles.calloutButton]}
-              >
-                <Text>Click me</Text>
-              </CalloutSubview>
-            </CustomCallout>
-          </Callout>
-        </Marker>
-        <Marker
-          ref={(ref) => {
-            let updateRef = markerRefs;
-            updateRef[3].ref = ref;
-            setMarkerRefs(updateRef);
-          }}
-          coordinate={markers[3].coordinate}
-          title="You can also open this callout"
-          description="by pressing on transparent area of custom callout"
-        />
+      <MapView style={styles.map} initialRegion={region} zoomTapEnabled={false}>
+        {markers.map((val, index) => {
+        return (<Marker
+          coordinate={val.coordinate}
+          key={index}
+          title = {"borehole point"}
+         />); 
+        })}
+ 
       </MapView>
       <View style={styles.buttonContainer}>
         <View style={styles.bubble}>
           <Text>Tap on markers to see different callouts</Text>
         </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => show()}
-          style={[styles.bubble, styles.button]}
-        >
-          <Text>Show</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => hide()}
-          style={[styles.bubble, styles.button]}
-        >
-          <Text>Hide</Text>
-        </TouchableOpacity>
-      </View>
+
     </View>
   );
 }
