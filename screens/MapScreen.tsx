@@ -5,7 +5,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Alert } from 'react-native';
 
-import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
+import { Marker, Callout, CalloutSubview } from 'react-native-maps';
+import MapView from "react-native-map-clustering"
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
