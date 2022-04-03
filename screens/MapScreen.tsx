@@ -12,6 +12,9 @@ import { BottomSheetModal, BottomSheetModalProvider } from "@gorhom/bottom-sheet
 import * as Font from "expo-font";
 import MapBottomSheet from "../components/MapBottomSheet";
 import AppLoading from "expo-app-loading";
+import * as Location from "expo-location";
+import Colours from "../constants/Colours";
+import { BROKEN, UNDER_REPAIR } from "../constants/WatersourceStatus";
 
 const { width, height } = Dimensions.get("window");
 const ASPECT_RATIO = width / height;
@@ -34,16 +37,16 @@ interface MapState {
 
 const sampleWatersource: WaterSource = {
   id: "123",
-  status: "Non-Functional",
+  status: UNDER_REPAIR,
   source_type: "Borehole",
   tech_type: "AfriDev",
   management: "management",
-  country: "country",
+  country: "Sierra Leone",
   install_year: "ex",
   area1: "area1",
   area2: "area2",
   area3: "area3",
-  area4: "area4",
+  area4: "Bonthe Urban",
   location: {
     latitude: LATITUDE,
     longitude: LONGITUDE,
@@ -120,6 +123,13 @@ export default class MapScreen extends React.Component<any, MapState> {
                 console.log("PRESSED");
                 this.handlePresentModalPress(sampleWatersource);
               }}
+              pinColor={
+                sampleWatersource.status == BROKEN
+                  ? Colours.red
+                  : sampleWatersource.status == UNDER_REPAIR
+                  ? Colours.yellow
+                  : Colours.green
+              }
             ></Marker>
           </MapView>
 

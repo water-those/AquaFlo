@@ -5,6 +5,7 @@ import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import Colours from "../constants/Colours";
 import { updateWaterSource } from "../api/watersource";
 import { useState, useEffect } from "react";
+import { AVALIABLE, BROKEN, UNDER_REPAIR } from "../constants/WatersourceStatus";
 
 interface Props {
   watersource: WaterSource | null;
@@ -17,10 +18,6 @@ const statusText = {
   "Non functional and needs repair": "Under Repair",
   "": "Available",
 };
-
-const AVALIABLE = "Functional";
-const BROKEN = "Non-Functional";
-const UNDER_REPAIR = "Non functional and needs repair";
 
 const snapPoints = ["25%", "60%"];
 
@@ -43,8 +40,8 @@ export default function MapBottomSheet(props: Props) {
       });
   };
 
-  const confirmationAlert = (statusType: string, watersource: WaterSource, newStatus: string) =>
-    Alert.alert("Would you like to mark this pump as " + statusType + "?", "Click 'Yes' to proceed", [
+  const confirmationAlert = (statusType: string, watersource: WaterSource, newStatus: string) => {
+    return Alert.alert("Would you like to mark this pump as " + statusType + "?", "Click 'Yes' to proceed", [
       {
         text: "Cancel",
         onPress: () => {},
@@ -57,24 +54,53 @@ export default function MapBottomSheet(props: Props) {
         },
       },
     ]);
+  };
+
+  const statusButton = (buttonStatus: string, watersource: WaterSource, statusName: string) => {
+    var buttonCircleStyle =
+      buttonStatus == BROKEN
+        ? styles.redCircle
+        : buttonStatus == UNDER_REPAIR
+        ? styles.yellowCircle
+        : styles.greenCircle;
+
+    return (
+      <TouchableOpacity
+        style={
+          watersource.status == buttonStatus
+            ? [styles.button, styles.buttonShadow, styles.disabled]
+            : [styles.button, styles.buttonShadow]
+        }
+        disabled={watersource.status == buttonStatus}
+        onPress={() => {
+          confirmationAlert(statusName.toLowerCase(), watersource, buttonStatus);
+        }}
+      >
+        <MaterialIcons
+          style={watersource.status == buttonStatus ? [buttonCircleStyle, styles.disabled] : [buttonCircleStyle]}
+          name="circle"
+        />
+        <Text style={watersource.status == buttonStatus ? [styles.buttonText, styles.disabled] : [styles.buttonText]}>
+          Mark as {statusName}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
 
   if (watersource != null) {
     return (
       <BottomSheetModal style={styles.shadow} ref={props.bottomSheetModalRef} index={1} snapPoints={snapPoints}>
+        <Ionicons
+          style={styles.navigationIcon}
+          name="md-navigate-circle"
+          onPress={() => {
+            openGps(watersource.location.latitude, watersource.location.longitude);
+          }}
+        />
         <View style={styles.contentContainer}>
           <View style={styles.headerContainer}>
-            <View></View>
-            <View style={styles.titleContainer}>
-              <MaterialIcons style={styles.locationIcon} name="location-pin" />
-              {watersourceHeader(watersource)}
-            </View>
-            <Ionicons
-              style={styles.navigationIcon}
-              name="md-navigate-circle"
-              onPress={() => {
-                openGps(watersource.location.latitude, watersource.location.longitude);
-              }}
-            />
+            <MaterialIcons style={styles.locationIcon} name="location-pin" />
+            {watersourceHeader(watersource)}
           </View>
 
           <View style={styles.subheaderContainer}>
@@ -100,79 +126,9 @@ export default function MapBottomSheet(props: Props) {
           </View>
 
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity
-              style={
-                watersource.status == BROKEN
-                  ? [styles.button, styles.buttonShadow, styles.disabled]
-                  : [styles.button, styles.buttonShadow]
-              }
-              disabled={watersource.status == BROKEN}
-              onPress={() => {
-                confirmationAlert("broken", watersource, BROKEN);
-              }}
-            >
-              <MaterialIcons
-                style={watersource.status == BROKEN ? [styles.redCircle, styles.disabled] : [styles.redCircle]}
-                name="circle"
-              />
-              <Text style={watersource.status == BROKEN ? [styles.buttonText, styles.disabled] : [styles.buttonText]}>
-                Mark as Broken
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={
-                watersource.status == UNDER_REPAIR
-                  ? [styles.button, styles.buttonShadow, styles.disabled]
-                  : [styles.button, styles.buttonShadow]
-              }
-              disabled={watersource.status == UNDER_REPAIR}
-              onPress={() => {
-                confirmationAlert("under repair", watersource, UNDER_REPAIR);
-              }}
-            >
-              <MaterialIcons
-                style={
-                  watersource.status == UNDER_REPAIR ? [styles.yellowCircle, styles.disabled] : [styles.yellowCircle]
-                }
-                name="circle"
-              />
-              <Text
-                style={watersource.status == UNDER_REPAIR ? [styles.buttonText, styles.disabled] : [styles.buttonText]}
-              >
-                Mark as Under Repair
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={
-                watersource.status == AVALIABLE || watersource.status == undefined
-                  ? [styles.button, styles.buttonShadow, styles.disabled]
-                  : [styles.button, styles.buttonShadow]
-              }
-              disabled={watersource.status == AVALIABLE || watersource.status == undefined}
-              onPress={() => {
-                confirmationAlert("available", watersource, AVALIABLE);
-              }}
-            >
-              <MaterialIcons
-                style={
-                  watersource.status == AVALIABLE || watersource.status == undefined
-                    ? [styles.greenCircle, styles.disabled]
-                    : [styles.greenCircle]
-                }
-                name="circle"
-              />
-              <Text
-                style={
-                  watersource.status == AVALIABLE || watersource.status == undefined
-                    ? [styles.buttonText, styles.disabled]
-                    : [styles.buttonText]
-                }
-              >
-                Mark as Available
-              </Text>
-            </TouchableOpacity>
+            {statusButton(BROKEN, watersource, "Broken")}
+            {statusButton(UNDER_REPAIR, watersource, "Under Repair")}
+            {statusButton(AVALIABLE, watersource, "Available")}
           </View>
         </View>
       </BottomSheetModal>
@@ -261,14 +217,10 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
-    alignContent: "space-between",
-    margin: 10,
+    marginBottom: 10,
     width: "85%",
-  },
-  titleContainer: {
-    flexDirection: "row",
   },
   headerText: {
     fontFamily: "SFProText-Semibold",
@@ -278,6 +230,7 @@ const styles = StyleSheet.create({
     color: Colours.blue,
     fontSize: 24,
     alignSelf: "flex-end",
+    marginRight: 15,
   },
   locationIcon: {
     color: Colours.black,
