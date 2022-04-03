@@ -24,13 +24,20 @@ export default function LoginScreen() {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
-        <TextInput placeholder="Email" value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
+        <TextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          style={styles.input}
+          autoCapitalize="none"
+        />
 
         <TextInput
           placeholder="Password"
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
+          autoCapitalize="none"
           secureTextEntry
         />
       </View>
@@ -62,7 +69,7 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
     borderRadius: 8,
     marginTop: 20,
-    borderColor: Colors.Background1,
+    borderColor: Colors.grey,
     borderWidth: 1,
   },
   buttonContainer: {

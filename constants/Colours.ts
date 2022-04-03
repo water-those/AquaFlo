@@ -6,7 +6,7 @@ export default {
   yellow: "#FFCC00",
   red: "#ED6463",
   black: "#192C41",
-  Background1: "rgba(25, 44, 65, .5)",
+  grey: "rgba(25, 44, 65, .5)",
   Background2: "#F9F9F9",
   white: "#FFFFFF",
 };
