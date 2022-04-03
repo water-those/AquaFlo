@@ -1,7 +1,7 @@
 import { WaterSource } from "../api/schemas";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { StyleSheet, View, TouchableOpacity, Text, Alert } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import { StyleSheet, View, TouchableOpacity, Text, Alert, Linking, Platform } from "react-native";
+import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import Colours from "../constants/Colours";
 import { updateWaterSource } from "../api/watersource";
 import { useState, useEffect } from "react";
@@ -63,9 +63,18 @@ export default function MapBottomSheet(props: Props) {
       <BottomSheetModal style={styles.shadow} ref={props.bottomSheetModalRef} index={1} snapPoints={snapPoints}>
         <View style={styles.contentContainer}>
           <View style={styles.headerContainer}>
-            <MaterialIcons style={styles.locationIcon} name="location-pin" />
-
-            {watersourceHeader(watersource)}
+            <View></View>
+            <View style={styles.titleContainer}>
+              <MaterialIcons style={styles.locationIcon} name="location-pin" />
+              {watersourceHeader(watersource)}
+            </View>
+            <Ionicons
+              style={styles.navigationIcon}
+              name="md-navigate-circle"
+              onPress={() => {
+                openGps(watersource.location.latitude, watersource.location.longitude);
+              }}
+            />
           </View>
 
           <View style={styles.subheaderContainer}>
@@ -211,6 +220,27 @@ function watersourceHeader(watersource: WaterSource) {
   );
 }
 
+const openGps = (lat: number, lng: number) => {
+  const scheme = Platform.select({ ios: "maps:0,0?q=", android: "geo:0,0?q=" });
+  const latLng = `${lat},${lng}`;
+  const label = "Hand Pump";
+  const url = Platform.select({
+    ios: `${scheme}${label}@${latLng}`,
+    android: `${scheme}${latLng}(${label})`,
+  });
+  openExternalApp(url!);
+};
+
+const openExternalApp = (url: string) => {
+  Linking.canOpenURL(url).then((supported) => {
+    if (supported) {
+      Linking.openURL(url);
+    } else {
+      Alert.alert("ERROR", "Unable to open: " + url, [{ text: "OK" }]);
+    }
+  });
+};
+
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
@@ -231,12 +261,23 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignContent: "space-between",
     margin: 10,
+    width: "85%",
+  },
+  titleContainer: {
+    flexDirection: "row",
   },
   headerText: {
     fontFamily: "SFProText-Semibold",
     fontSize: 20,
+  },
+  navigationIcon: {
+    color: Colours.blue,
+    fontSize: 24,
+    alignSelf: "flex-end",
   },
   locationIcon: {
     color: Colours.black,
