@@ -1,78 +1,211 @@
-// I followed code from
-// https://dev.to/peterklingelhofer/an-introduction-to-google-maps-in-react-native-expo-1g7d
-// I ended up removing prop types not sure if thats a big deal
+import React from "react";
+import { StyleSheet, View, Dimensions } from "react-native";
+import Map, { Marker } from "react-native-maps";
+import ProviderPropType from "react-native-maps";
+import MapView from "react-native-map-clustering";
+import { getWaterSourcesByLocation } from "../api/watersource";
+import { WaterSource } from "../api/schemas";
+import { BottomSheetModal, BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import * as Font from "expo-font";
+import MapBottomSheet from "../components/MapBottomSheet";
+import AppLoading from "expo-app-loading";
+import * as Location from "expo-location";
+import Colours from "../constants/Colours";
+import { AVAILABLE, BROKEN, UNDER_REPAIR } from "../constants/WatersourceStatus";
 
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Alert } from 'react-native';
+const { height, width } = Dimensions.get("window");
+const LATITUDE_DELTA = 0.28;
+const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height);
 
-import { Marker, Callout, CalloutSubview } from 'react-native-maps';
-import MapView from "react-native-map-clustering"
+interface MapState {
+  fontsLoaded: boolean;
+  region: {
+    latitude: number;
+    longitude: number;
+    latitudeDelta: number;
+    longitudeDelta: number;
+  };
+  markers: Array<WaterSource>;
+  selectedWaterSource: WaterSource | null;
+  userLocation: Location.LocationObject | null;
+}
 
-const { width, height } = Dimensions.get('window');
-const ASPECT_RATIO = width / height;
-const LATITUDE = 29.9990674;
-const LONGITUDE = -90.0852767;
-const LATITUDE_DELTA = 0.0922;
-const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-const SPACE = 0.01;
+interface MapProps {
+  provider: ProviderPropType;
+}
 
-export default function MapScreen() {
-  const [count, setCount] = useState(0);
-  const [region, setRegion] = useState({
-    latitude: LATITUDE,
-    longitude: LONGITUDE,
-    latitudeDelta: LATITUDE_DELTA,
-    longitudeDelta: LONGITUDE_DELTA,
-  });
-  // need to pull actual coordinates of boreholes from a database
-  const [markers, setMarkers] = useState([
-    {
-      coordinate: {
-        latitude: LATITUDE + SPACE,
-        longitude: LONGITUDE + SPACE,
+const sampleWatersource: WaterSource = {
+  id: "123",
+  status: AVAILABLE,
+  source_type: "Borehole",
+  tech_type: "AfriDev",
+  management: "management",
+  country: "Sierra Leone",
+  install_year: "ex",
+  area1: "area1",
+  area2: "area2",
+  area3: "area3",
+  area4: "Bonthe Urban",
+  location: {
+    latitude: 7.5291486,
+    longitude: -12.514372,
+  },
+  geohash: "geohash",
+};
+
+export default class MapScreen extends React.Component<MapProps, MapState> {
+  private bottomSheetModalRef;
+  private mapRef;
+
+  constructor(props: any) {
+    super(props);
+
+    this.bottomSheetModalRef = React.createRef<BottomSheetModal>();
+    this.mapRef = React.createRef<Map>();
+
+    this.state = {
+      fontsLoaded: false,
+      region: {
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
       },
-    },
-    {
-      coordinate: {
-        latitude: LATITUDE + SPACE,
-        longitude: LONGITUDE - SPACE,
-      },
-    },
-    {
-      coordinate: {
-        latitude: LATITUDE,
-        longitude: LONGITUDE,
-      },
-    },
-    {
-      coordinate: {
-        latitude: LATITUDE,
-        longitude: LONGITUDE - SPACE / 2,
-      },
-    },
-  ]);
+      markers: [],
+      selectedWaterSource: null,
+      userLocation: null,
+    };
+  }
 
-  // https://stackoverflow.com/questions/58936356/dynamically-rendering-mapview-marker-react-native 
-  return (
-    <View style={styles.container}>
-      <MapView style={styles.map} initialRegion={region} zoomTapEnabled={false}>
-        {markers.map((val, index) => {
-        return (<Marker
-          coordinate={val.coordinate}
-          key={index}
-          title = {"borehole point"}
-         />); 
-        })}
- 
-      </MapView>
-      <View style={styles.buttonContainer}>
-        <View style={styles.bubble}>
-          <Text>Tap on markers to see different callouts</Text>
+  componentDidMount() {
+    Font.loadAsync({
+      "SFProText-Semibold": require("../assets/fonts/SFProText-Semibold.otf"),
+      "SFProText-Regular": require("../assets/fonts/SFProText-Regular.otf"),
+      "SFProText-Bold": require("../assets/fonts/SFProText-Bold.otf"),
+    }).then(() => this.setState({ fontsLoaded: true }));
+
+    const getLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      this.setState({ userLocation: location });
+    };
+
+    (async () => {
+      await getLocation().then(() => {
+        this.setState({
+          region: {
+            latitude: this.state.userLocation!.coords.latitude,
+            longitude: this.state.userLocation!.coords.longitude,
+            latitudeDelta: 10,
+            longitudeDelta: 10,
+          },
+        });
+        this.animateMap(this.state.userLocation!.coords.latitude, this.state.userLocation!.coords.longitude);
+
+        // COMMENTED OUT TO REDUCE QUERIES TO FIREBASE
+        // getWaterSourcesByLocation(
+        //   this.state.userLocation!.coords.latitude,
+        //   this.state.userLocation!.coords.longitude,
+        //   5
+        // ).then((watersources) => {
+        //   this.setState({ markers: watersources! });
+        // });
+      });
+    })();
+  }
+
+  animateMap = (lat: number, lng: number) => {
+    this.mapRef.current?.animateToRegion({
+      longitude: lng,
+      latitude: lat,
+      latitudeDelta: LATITUDE_DELTA,
+      longitudeDelta: LONGITUDE_DELTA,
+    });
+  };
+
+  mapMarkers = () => {
+    return this.state.markers.map((marker, index) => (
+      <Marker
+        coordinate={{ latitude: marker.location.latitude, longitude: marker.location.longitude }}
+        key={index}
+        onPress={() => {
+          this.handlePresentModalPress(marker);
+        }}
+        pinColor={
+          marker.status == BROKEN ? Colours.red : marker.status == UNDER_REPAIR ? Colours.yellow : Colours.green
+        }
+      ></Marker>
+    ));
+  };
+
+  handlePresentModalPress = (marker: WaterSource) => {
+    this.setState({ selectedWaterSource: marker });
+    this.bottomSheetModalRef.current?.present();
+  };
+
+  render() {
+    if (!this.state.fontsLoaded) {
+      return <AppLoading />;
+    }
+    return (
+      <BottomSheetModalProvider>
+        <View style={styles.container}>
+          <MapView
+            ref={this.mapRef}
+            style={styles.map}
+            initialRegion={this.state.region}
+            showsUserLocation={true}
+            showsCompass={true}
+            onRegionChangeComplete={(newRegion) => {
+              this.setState({ region: newRegion });
+              // COMMENTED OUT TO REDUCE QUERIES TO FIREBASE
+              // getWaterSourcesByLocation(this.state.region.latitude, this.state.region.longitude, 5).then(
+              //   (watersources) => {
+              //     const allWaterSources = new Set();
+              //     this.state.markers.forEach((marker) => {
+              //       allWaterSources.add(marker.id);
+              //     });
+
+              //     const newWatersources: Array<WaterSource> = watersources!.filter(
+              //       (watersource: WaterSource) => !allWaterSources.has(watersource.id)
+              //     );
+              //     const allsource = this.state.markers.concat(newWatersources);
+              //     this.setState({ markers: allsource });
+              //   }
+              // );
+            }}
+          >
+            {this.mapMarkers()}
+            <Marker
+              coordinate={{
+                latitude: sampleWatersource.location.latitude,
+                longitude: sampleWatersource.location.longitude,
+              }}
+              key={0}
+              title={"EXAMPLE POINT"}
+              onPress={() => {
+                this.handlePresentModalPress(sampleWatersource);
+              }}
+              pinColor={
+                sampleWatersource.status == BROKEN
+                  ? Colours.red
+                  : sampleWatersource.status == UNDER_REPAIR
+                  ? Colours.yellow
+                  : Colours.green
+              }
+            ></Marker>
+          </MapView>
+
+          <MapBottomSheet watersource={this.state.selectedWaterSource} bottomSheetModalRef={this.bottomSheetModalRef} />
         </View>
-      </View>
-
-    </View>
-  );
+      </BottomSheetModalProvider>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -85,42 +218,24 @@ const styles = StyleSheet.create({
   },
   container: {
     ...StyleSheet.absoluteFillObject,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
   map: {
     ...StyleSheet.absoluteFillObject,
   },
-  bubble: {
-    flex: 1,
-    backgroundColor: 'rgba(255,255,255,0.7)',
-    paddingHorizontal: 18,
-    paddingVertical: 12,
-    borderRadius: 20,
-  },
   latlng: {
     width: 200,
-    alignItems: 'stretch',
+    alignItems: "stretch",
   },
   button: {
     width: 80,
     paddingHorizontal: 12,
-    alignItems: 'center',
+    alignItems: "center",
     marginHorizontal: 10,
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    marginVertical: 20,
-    backgroundColor: 'transparent',
-  },
-  calloutButton: {
-    width: 'auto',
-    backgroundColor: 'rgba(255,255,255,0.7)',
-    paddingHorizontal: 6,
-    paddingVertical: 6,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginHorizontal: 10,
-    marginVertical: 10,
+  contentContainer: {
+    flex: 1,
+    alignItems: "center",
   },
 });
