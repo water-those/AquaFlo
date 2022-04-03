@@ -3,7 +3,7 @@ import firebase from "firebase/compat/app";
 import { watersourceSchema, WaterSource } from "./schemas";
 
 // Based on geohash queries as documented by firebase: https://firebase.google.com/docs/firestore/solutions/geoqueries#query_geohashes
-export const queryMapByLocation = (xcoordinate: number, ycoordinate: number, radius: number) => {
+export const getWaterSourcesByLocation = (xcoordinate: number, ycoordinate: number, radius: number) => {
   const geofire = require("geofire-common");
   // Find cities within 50km of London
   const center = [xcoordinate, ycoordinate];
@@ -17,7 +17,6 @@ export const queryMapByLocation = (xcoordinate: number, ycoordinate: number, rad
 
   for (const b of bounds) {
     const q = db.collection("watersources").orderBy("geohash").startAt(b[0]).endAt(b[1]);
-
     promises.push(q.get());
   }
 
@@ -56,4 +55,8 @@ export const queryMapByLocation = (xcoordinate: number, ycoordinate: number, rad
     .catch((error) => {
       console.log(error);
     });
+};
+
+export const updateWaterSource = (id: string, changes: object) => {
+  return db.collection("watersources").doc(id).update(changes);
 };

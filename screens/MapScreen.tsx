@@ -6,7 +6,7 @@ import React from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
 import { Marker } from "react-native-maps";
 import MapView from "react-native-map-clustering";
-import { queryMapByLocation } from "../api/map";
+import { getWaterSourcesByLocation } from "../api/watersource";
 import { WaterSource } from "../api/schemas";
 import { BottomSheetModal, BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import * as Font from "expo-font";
@@ -80,7 +80,7 @@ export default class MapScreen extends React.Component<any, MapState> {
       "SFProText-Bold": require("../assets/fonts/SFProText-Bold.otf"),
     }).then(() => this.setState({ fontsLoaded: true }));
 
-    // queryMapByLocation(LATITUDE, LONGITUDE, 0.5).then((watersources) => {
+    // getWaterSourcesByLocation(LATITUDE, LONGITUDE, 0.5).then((watersources) => {
     //   this.setState({ markers: watersources! });
     // });
   }

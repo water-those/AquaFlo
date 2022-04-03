@@ -1,8 +1,10 @@
 import { WaterSource } from "../api/schemas";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text, Alert } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Colours from "../constants/Colours";
+import { updateWaterSource } from "../api/watersource";
+import { useState, useEffect } from "react";
 
 interface Props {
   watersource: WaterSource | null;
@@ -23,82 +25,111 @@ const UNDER_REPAIR = "Non functional and needs repair";
 const snapPoints = ["25%", "60%"];
 
 export default function MapBottomSheet(props: Props) {
-  if (props.watersource != null) {
+  const [watersource, setWatersource] = useState(props.watersource);
+  const [refresher, setRefresher] = useState(true);
+
+  useEffect(() => {
+    setWatersource(props.watersource);
+  }, [props.watersource]);
+
+  const statusChangeHandler = (newStatus: string, watersource: WaterSource) => {
+    updateWaterSource(watersource.id!, { status: newStatus })
+      .then(() => {
+        watersource.status = newStatus;
+        setRefresher(!refresher);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const confirmationAlert = (statusType: string, watersource: WaterSource, newStatus: string) =>
+    Alert.alert("Would you like to mark this pump as " + statusType + "?", "Click 'Yes' to proceed", [
+      {
+        text: "Cancel",
+        onPress: () => {},
+        style: "cancel",
+      },
+      {
+        text: "Yes",
+        onPress: () => {
+          statusChangeHandler(newStatus, watersource);
+        },
+      },
+    ]);
+
+  if (watersource != null) {
     return (
       <BottomSheetModal style={styles.shadow} ref={props.bottomSheetModalRef} index={1} snapPoints={snapPoints}>
         <View style={styles.contentContainer}>
           <View style={styles.headerContainer}>
             <MaterialIcons style={styles.locationIcon} name="location-pin" />
 
-            {watersourceHeader(props.watersource!)}
+            {watersourceHeader(watersource)}
           </View>
 
           <View style={styles.subheaderContainer}>
             <MaterialIcons
-              style={
-                props.watersource!.status == undefined
-                  ? styles.greenCircle
-                  : (statusIcon as any)[props.watersource!.status]
-              }
+              style={watersource.status == undefined ? styles.greenCircle : (statusIcon as any)[watersource.status]}
               name="circle"
             />
             <Text style={styles.subheaderText}>
-              {props.watersource!.status == undefined ? "Available" : (statusText as any)[props.watersource!.status]}
+              {watersource.status == undefined ? "Available" : (statusText as any)[watersource.status]}
             </Text>
           </View>
 
           <View style={styles.additionalInfoContainer}>
             <View style={styles.infoSectionContainer}>
               <Text style={styles.infoHeaderText}>Hand Pump Type</Text>
-              <Text style={styles.infoDescriptionText}>{props.watersource!.tech_type}</Text>
+              <Text style={styles.infoDescriptionText}>{watersource.tech_type}</Text>
             </View>
 
             <View style={styles.infoSectionContainer}>
               <Text style={styles.infoHeaderText}>Water Source</Text>
-              <Text style={styles.infoDescriptionText}>{props.watersource!.source_type}</Text>
+              <Text style={styles.infoDescriptionText}>{watersource.source_type}</Text>
             </View>
           </View>
 
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={
-                props.watersource!.status == BROKEN
+                watersource.status == BROKEN
                   ? [styles.button, styles.buttonShadow, styles.disabled]
                   : [styles.button, styles.buttonShadow]
               }
-              disabled={props.watersource!.status == BROKEN}
+              disabled={watersource.status == BROKEN}
+              onPress={() => {
+                confirmationAlert("broken", watersource, BROKEN);
+              }}
             >
               <MaterialIcons
-                style={props.watersource!.status == BROKEN ? [styles.redCircle, styles.disabled] : [styles.redCircle]}
+                style={watersource.status == BROKEN ? [styles.redCircle, styles.disabled] : [styles.redCircle]}
                 name="circle"
               />
-              <Text
-                style={props.watersource!.status == BROKEN ? [styles.buttonText, styles.disabled] : [styles.buttonText]}
-              >
+              <Text style={watersource.status == BROKEN ? [styles.buttonText, styles.disabled] : [styles.buttonText]}>
                 Mark as Broken
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={
-                props.watersource!.status == UNDER_REPAIR
+                watersource.status == UNDER_REPAIR
                   ? [styles.button, styles.buttonShadow, styles.disabled]
                   : [styles.button, styles.buttonShadow]
               }
-              disabled={props.watersource!.status == UNDER_REPAIR}
+              disabled={watersource.status == UNDER_REPAIR}
+              onPress={() => {
+                confirmationAlert("under repair", watersource, UNDER_REPAIR);
+              }}
             >
               <MaterialIcons
                 style={
-                  props.watersource!.status == UNDER_REPAIR
-                    ? [styles.yellowCircle, styles.disabled]
-                    : [styles.yellowCircle]
+                  watersource.status == UNDER_REPAIR ? [styles.yellowCircle, styles.disabled] : [styles.yellowCircle]
                 }
                 name="circle"
               />
               <Text
-                style={
-                  props.watersource!.status == UNDER_REPAIR ? [styles.buttonText, styles.disabled] : [styles.buttonText]
-                }
+                style={watersource.status == UNDER_REPAIR ? [styles.buttonText, styles.disabled] : [styles.buttonText]}
               >
                 Mark as Under Repair
               </Text>
@@ -106,15 +137,18 @@ export default function MapBottomSheet(props: Props) {
 
             <TouchableOpacity
               style={
-                props.watersource!.status == AVALIABLE || props.watersource!.status == undefined
+                watersource.status == AVALIABLE || watersource.status == undefined
                   ? [styles.button, styles.buttonShadow, styles.disabled]
                   : [styles.button, styles.buttonShadow]
               }
-              disabled={props.watersource!.status == AVALIABLE || props.watersource!.status == undefined}
+              disabled={watersource.status == AVALIABLE || watersource.status == undefined}
+              onPress={() => {
+                confirmationAlert("available", watersource, AVALIABLE);
+              }}
             >
               <MaterialIcons
                 style={
-                  props.watersource!.status == AVALIABLE || props.watersource!.status == undefined
+                  watersource.status == AVALIABLE || watersource.status == undefined
                     ? [styles.greenCircle, styles.disabled]
                     : [styles.greenCircle]
                 }
@@ -122,7 +156,7 @@ export default function MapBottomSheet(props: Props) {
               />
               <Text
                 style={
-                  props.watersource!.status == AVALIABLE || props.watersource!.status == undefined
+                  watersource.status == AVALIABLE || watersource.status == undefined
                     ? [styles.buttonText, styles.disabled]
                     : [styles.buttonText]
                 }
@@ -143,7 +177,9 @@ export default function MapBottomSheet(props: Props) {
       snapPoints={snapPoints}
       onChange={() => {}}
     >
-      <View style={styles.contentContainer}>EMPTY</View>
+      <View style={styles.contentContainer}>
+        <Text>EMPTY</Text>
+      </View>
     </BottomSheetModal>
   );
 }
