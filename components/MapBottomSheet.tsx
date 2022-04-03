@@ -5,7 +5,7 @@ import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import Colours from "../constants/Colours";
 import { updateWaterSource } from "../api/watersource";
 import { useState, useEffect } from "react";
-import { AVALIABLE, BROKEN, UNDER_REPAIR } from "../constants/WatersourceStatus";
+import { AVAILABLE, BROKEN, UNDER_REPAIR } from "../constants/WatersourceStatus";
 
 interface Props {
   watersource: WaterSource | null;
@@ -128,7 +128,7 @@ export default function MapBottomSheet(props: Props) {
           <View style={styles.buttonsContainer}>
             {statusButton(BROKEN, watersource, "Broken")}
             {statusButton(UNDER_REPAIR, watersource, "Under Repair")}
-            {statusButton(AVALIABLE, watersource, "Available")}
+            {statusButton(AVAILABLE, watersource, "Available")}
           </View>
         </View>
       </BottomSheetModal>
