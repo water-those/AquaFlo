@@ -1,9 +1,28 @@
-import { Text, View, StyleSheet } from "react-native";
-
+import { Text, Image, ScrollView, View, StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import TopBar from "../components/topbar";
+import HandPumpType from "../components/HandPumpType";
+import Colours from "../constants/Colours";
 export default function RepairScreen() {
   return (
     <View style={styles.container}>
-      <Text>Repair Screen!</Text>
+      <TopBar title="Repair"></TopBar>
+      <Text>Hand Pump Types</Text>
+      <View>
+        <ScrollView horizontal={true} contentContainerStyle={{
+      paddingLeft: 25,
+    paddingRight: 25,
+    alignContent: 'space-between',
+  }}>
+          
+            <HandPumpType/>
+            <HandPumpType/>
+            <HandPumpType/>
+            <HandPumpType/>
+        
+        </ScrollView>
+      </View>
+  
     </View>
   );
 }
@@ -11,7 +30,14 @@ export default function RepairScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
+  scroll: {
+    alignContent: 'space-between',
+    flexDirection:'row',
+    paddingRight: 20
+  },
+  test: {
+    paddingHorizontal: 20
+  }
+
 });

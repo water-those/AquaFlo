@@ -1,9 +1,10 @@
 import { Text, View, StyleSheet } from "react-native";
+import TopBar from "../components/topbar";
 
 export default function CommunityScreen() {
   return (
     <View style={styles.container}>
-      <Text>Community Screen!</Text>
+      <TopBar title="Community"></TopBar>
     </View>
   );
 }
@@ -11,7 +12,5 @@ export default function CommunityScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
