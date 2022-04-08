@@ -10,7 +10,7 @@ import config from "./config";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCuNKEGNqKsvVvs1Yk5WSn1eKJDNqTAarE",
+  apiKey: config.FIREBASE_API_KEY,
   authDomain: config.FIREBASE_AUTH_DOMAIN,
   projectId: config.FIREBASE_PROJECT_ID,
   storageBucket: config.FIREBASE_STORAGE_BUCKET,

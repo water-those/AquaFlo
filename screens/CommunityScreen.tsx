@@ -427,6 +427,8 @@ export default function CommunityScreen({ route, navigation }: CommunityScreenPr
   );
 }
 
+
+
 const styles = StyleSheet.create({
   topContainer: {
     flex: 1,

@@ -9,6 +9,7 @@ import PostsScreen from "../screens/PostsScreen";
 import PostScreen from "../screens/PostScreen";
 import LoginScreen from "../screens/LoginScreen";
 import { RootStackParamList, BottomTabParamList, CommunityStackParamList, RepairStackParamList } from "../types";
+import Onboarding1 from "../components/Onboarding1";
 
 /**
  * A stack navigator provides a way for your app to transition between screens
@@ -22,7 +23,16 @@ export default function Navigation() {
     <NavigationContainer>
       <RootStack.Navigator>
         {/* <RootStack.Screen name="Login" options={{ headerShown: false }} component={LoginScreen}></RootStack.Screen> */}
-        <RootStack.Screen name="BottomTabNavigator" options={{ headerShown: false }} component={BottomTabNavigator} />
+        <RootStack.Screen
+          name="Onboarding"
+          options={{ headerShown: false }}
+          component={Onboarding1}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name="BottomTabNavigator"
+          options={{ headerShown: false }}
+          component={BottomTabNavigator}
+        ></RootStack.Screen>
       </RootStack.Navigator>
     </NavigationContainer>
   );
