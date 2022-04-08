@@ -12,7 +12,7 @@ export default [
     title: "Connect with a Community",
     description:
       "Missing a part? write a request and oterhs can help by sharing parts for pumps!",
-    image: require("../assets/onboardingimg.png"),
+    image: require("../assets/onboardingimg2.png"),
   },
 
   {
@@ -20,6 +20,6 @@ export default [
     title: "Repair Pumps Easily",
     description:
       "Knowing the pump model, you can easily look at common mistakes and fixes for the pump!",
-    image: require("../assets/onboardingimg.png"),
+    image: require("../assets/onboardingimg3.png"),
   },
 ];

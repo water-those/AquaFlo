@@ -8,13 +8,20 @@ import {
 import React from "react";
 import { color } from "react-native-reanimated";
 import Colors from "../constants/Colours";
+// import onboardimage from "../assets/onboardingimg.png";
+// interface Props{
+//   id: string,
+//   title: string,
+//   description: string,
+//   image: string,
+// }
 
-export default OnboardingItem = ({ item }) => {
+export default function OnboardingItem ({ item }) {
   const { width } = useWindowDimensions();
   return (
     <View style={[styles.container, { width }]}>
       <Image
-        source={item.Image}
+        source={item.image}
         style={[styles.image, { width, resizeMode: "contain" }]}
       />
 
@@ -34,15 +41,18 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    flex: 0.7,
+    flex: 0.5,
     justifyContent: "center",
+    marginTop: 60,
+    marginBottom: 60,
+    // backgroundColor: Colors.Background1,
   },
 
   title: {
     color: Colors.black,
     fontWeight: "700",
     fontSize: 18,
-    marginBottom: 20,
+    marginBottom: "7%",
     textAlign: "center",
   },
 
