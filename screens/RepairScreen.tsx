@@ -24,10 +24,12 @@ export default function RepairScreen() {
           paddingBottom: 20,
           alignContent: 'space-between',
         }}>
-            <HandPumpType/>
-            <HandPumpType/>
-            <HandPumpType/>
-            <HandPumpType/>
+            <HandPumpType handpump_type="imk2"/>
+            <HandPumpType handpump_type="afridev"/>
+            <HandPumpType handpump_type="vergnet"/>
+            <HandPumpType handpump_type="nira"/>
+            <HandPumpType handpump_type="volanta"/>
+            <HandPumpType handpump_type="kardia"/>
         
         </ScrollView>
       </View>
