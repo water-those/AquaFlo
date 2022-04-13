@@ -40,7 +40,7 @@ export default function Onboarding1Screen({navigation}) {
           data={slides}
           renderItem={({ item }) => <OnboardingItem item={item} />}
           horizontal
-          showsHorizontalScrollIndicator
+          showsHorizontalScrollIndicator ={false}
           pagingEnabled
           bounces={false}
           keyExtractor={(item) => item.id}
@@ -65,7 +65,7 @@ export default function Onboarding1Screen({navigation}) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => navigation.navigate('Signup')}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Sign Up</Text>
