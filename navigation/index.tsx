@@ -22,11 +22,15 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <RootStack.Navigator>
-        {/* <RootStack.Screen name="Login" options={{ headerShown: false }} component={LoginScreen}></RootStack.Screen> */}
         <RootStack.Screen
           name="Onboarding"
           options={{ headerShown: false }}
           component={Onboarding1}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name="Login"
+          options={{ headerShown: false }}
+          component={LoginScreen}
         ></RootStack.Screen>
         <RootStack.Screen
           name="BottomTabNavigator"
@@ -52,7 +56,9 @@ function BottomTabNavigator() {
         component={MapScreen}
         options={{
           tabBarLabel: "Map",
-          tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="map" color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="map" color={color} size={size} />
+          ),
           headerShown: false,
           tabBarLabelStyle: { paddingBottom: 5 },
         }}
@@ -62,7 +68,13 @@ function BottomTabNavigator() {
         component={RepairStackNavigator}
         options={{
           tabBarLabel: "Repair",
-          tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="wrench-outline" color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="wrench-outline"
+              color={color}
+              size={size}
+            />
+          ),
           headerShown: false,
           tabBarLabelStyle: { paddingBottom: 5 },
         }}
@@ -73,7 +85,11 @@ function BottomTabNavigator() {
         options={{
           tabBarLabel: "Community",
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="comment-multiple-outline" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="comment-multiple-outline"
+              color={color}
+              size={size}
+            />
           ),
           headerShown: false,
           tabBarLabelStyle: { paddingBottom: 5 },
