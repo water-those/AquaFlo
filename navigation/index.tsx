@@ -19,7 +19,7 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <RootStack.Navigator>
-        <RootStack.Screen name="Login" options={{ headerShown: false }} component={LoginScreen}></RootStack.Screen>
+        {/* <RootStack.Screen name="Login" options={{ headerShown: false }} component={LoginScreen}></RootStack.Screen> */}
         <RootStack.Screen
           name="BottomTabNavigator"
           options={{ headerShown: false }}
