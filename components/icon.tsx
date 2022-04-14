@@ -1,4 +1,4 @@
-import { Text, Image, ScrollView, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Colours from "../constants/Colours";
 // add it so instead of JW it takes a function

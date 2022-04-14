@@ -1,5 +1,5 @@
 import { ScrollView, Text, TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Colors from "../constants/Colours";
 import TopBar from "../components/topbar";
 import Icon from "../components/icon";
@@ -127,8 +127,6 @@ const styles = StyleSheet.create({
   },
   posts_group: {
     marginBottom: 35,
-    // borderWidth: 1,
-    // borderColor: Colors.black,
   },
   post: {
     marginTop: 10,
@@ -137,19 +135,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     borderRadius: 5,
-    // borderWidth: 1,
-    // borderColor: Colors.black,
   },
   post_text: {
     fontFamily: "SFProText-Semibold",
     fontSize: 15,
     width: "95%",
-    // borderWidth: 1,
-    // borderColor: Colors.black,
   },
   chevronIcon: {
     fontSize: 20,
-    // borderWidth: 1,
-    // borderColor: Colors.black,
   },
 });
