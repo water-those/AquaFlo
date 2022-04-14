@@ -1,4 +1,4 @@
-import { Text, Image, View, StyleSheet } from "react-native";
+import { Text, Image, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface Props {
@@ -6,35 +6,35 @@ interface Props {
 }
 const handpumps = {
   india_mark_ii: {
-    handpump_name: 'India Mark II', 
-    uri: require('../assets/imk2.png')
+    handpump_name: "India Mark II",
+    uri: require("../assets/imk2.png"),
   },
   afridev: {
-    handpump_name: 'Afridev', 
-    uri: require('../assets/afridev.png')
+    handpump_name: "Afridev",
+    uri: require("../assets/afridev.png"),
   },
   kardia: {
-    handpump_name: 'Kardia', 
-    uri: require('../assets/Kardia.png')
+    handpump_name: "Kardia",
+    uri: require("../assets/Kardia.png"),
   },
   vergnet: {
-    handpump_name: 'Vergnet', 
-    uri: require('../assets/Vergnet.png')
+    handpump_name: "Vergnet",
+    uri: require("../assets/Vergnet.png"),
   },
   volanta: {
-    handpump_name: 'Volanta', 
-    uri: require('../assets/Volanta.png')
+    handpump_name: "Volanta",
+    uri: require("../assets/Volanta.png"),
   },
   nira: {
-    handpump_name: 'Nira', 
-    uri: require('../assets/Nira.png')
-  }
-}
+    handpump_name: "Nira",
+    uri: require("../assets/Nira.png"),
+  },
+};
 
-export default function HandPumpType(props : Props) {
+export default function HandPumpType(props: Props) {
   let handpump = null;
 
-  switch(props.handpump_type) {
+  switch (props.handpump_type) {
     case "imk2":
       handpump = handpumps.india_mark_ii;
       break;
@@ -77,12 +77,12 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   scale_image: {
-    maxWidth:'50%',
-    maxHeight:'50%',
+    maxWidth: "50%",
+    maxHeight: "50%",
   },
   pump_name: {
     marginRight: 15,
     marginLeft: 15,
-    textAlign: 'center'
-  }
+    textAlign: "center",
+  },
 });

@@ -1,10 +1,8 @@
-import { Text, Image, ScrollView, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Colours from "../constants/Colours";
 // add it so instead of JW it takes a function
-interface Props {
-  name: string;
-}
+
 export default function Info() {
   return (
     <View>
@@ -28,7 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colours.blue,
     alignItems: "center",
     justifyContent: "center",
-    textAlignVertical: 'center',
+    textAlignVertical: "center",
     marginLeft: 10,
     marginRight: 10,
   },
