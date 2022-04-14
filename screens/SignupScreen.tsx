@@ -56,7 +56,7 @@ export default function SignupScreen() {
 
       <View style={styles.contentView}>
         <Text style={styles.bottomtext}>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
           <Text style={styles.register}>Sign In</Text>
         </TouchableOpacity>
       </View>
@@ -123,12 +123,12 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   input: {
-    backgroundColor: "white",
     paddingHorizontal: 15,
-    paddingVertical: 13,
+    paddingVertical: 16,
     borderRadius: 8,
     marginTop: 20,
     borderColor: Colors.grey,
+    color: Colors.grey,
     borderWidth: 1,
   },
   bottomtext: {

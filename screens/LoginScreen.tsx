@@ -94,9 +94,10 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: "80%",
+    backgroundColor: 'transparent'
   },
   input: {
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     paddingHorizontal: 15,
     paddingVertical: 13,
     borderRadius: 8,
