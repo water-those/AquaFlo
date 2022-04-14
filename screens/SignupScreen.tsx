@@ -53,6 +53,13 @@ export default function SignupScreen() {
           <Text style={styles.buttonOutlineText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
+
+      <View style={styles.contentView}>
+        <Text style={styles.bottomtext}>Already have an account? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.register}>Sign In</Text>
+        </TouchableOpacity>
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -123,5 +130,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderColor: Colors.grey,
     borderWidth: 1,
+  },
+  bottomtext: {
+    fontWeight: "300",
+  },
+  register: {
+    fontWeight: "600",
+    color: Colors.black,
   },
 });
