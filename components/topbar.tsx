@@ -1,16 +1,31 @@
-import { Text, StatusBar, View, StyleSheet } from "react-native";
+import { Text, StatusBar, View, StyleSheet, TouchableOpacity } from "react-native";
 import Colours from "../constants/Colours";
 import Icon from "../components/icon";
+import { MaterialIcons } from "@expo/vector-icons";
 // add it so that instead it takes a function for the name
 interface Props {
   title: string;
+  navigation?: any;
 }
 export default function TopBar(props: Props) {
   return (
     <View style={styles.topbar}>
       <StatusBar barStyle="dark-content" />
-      <Text style={styles.text}>{props.title}</Text>
-      <Icon name="JD" />
+      <View style={styles.titleContainer}>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.goBack();
+          }}
+        >
+          {props.navigation ? (
+            <MaterialIcons style={styles.backIcon} name="chevron-left" />
+          ) : (
+            <View style={{ marginLeft: 20 }} />
+          )}
+        </TouchableOpacity>
+        <Text style={styles.text}>{props.title}</Text>
+      </View>
+      <Icon name="John Doe" />
     </View>
   );
 }
@@ -23,11 +38,17 @@ const styles = StyleSheet.create({
   topbar: {
     width: "100%",
     height: "10%",
-    paddingLeft: "5%",
     paddingRight: "5%",
     backgroundColor: Colours.white,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  backIcon: {
+    fontSize: 40,
   },
 });
