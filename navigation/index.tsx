@@ -5,8 +5,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import RepairScreen from "../screens/RepairScreen";
 import MapScreen from "../screens/MapScreen";
 import CommunityScreen from "../screens/CommunityScreen";
+import PostsScreen from "../screens/PostsScreen";
+import PostScreen from "../screens/PostScreen";
 import LoginScreen from "../screens/LoginScreen";
-import { RootStackParamList, BottomTabParamList } from "../types";
+import { RootStackParamList, BottomTabParamList, CommunityStackParamList } from "../types";
 
 /**
  * A stack navigator provides a way for your app to transition between screens
@@ -19,12 +21,8 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <RootStack.Navigator>
-        {/* <RootStack.Screen name="Login" options={{ headerShown: false }} component={LoginScreen}></RootStack.Screen> */}
-        <RootStack.Screen
-          name="BottomTabNavigator"
-          options={{ headerShown: false }}
-          component={BottomTabNavigator}
-        ></RootStack.Screen>
+        <RootStack.Screen name="Login" options={{ headerShown: false }} component={LoginScreen}></RootStack.Screen>
+        <RootStack.Screen name="BottomTabNavigator" options={{ headerShown: false }} component={BottomTabNavigator} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
@@ -46,6 +44,7 @@ function BottomTabNavigator() {
           tabBarLabel: "Map",
           tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="map" color={color} size={size} />,
           headerShown: false,
+          tabBarLabelStyle: { paddingBottom: 5 },
         }}
       />
       <BottomTab.Screen
@@ -55,19 +54,33 @@ function BottomTabNavigator() {
           tabBarLabel: "Repair",
           tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="wrench-outline" color={color} size={size} />,
           headerShown: false,
+          tabBarLabelStyle: { paddingBottom: 5 },
         }}
       />
       <BottomTab.Screen
-        name="Community"
-        component={CommunityScreen}
+        name="CommunityNavigator"
+        component={CommunityStackNavigator}
         options={{
           tabBarLabel: "Community",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="comment-multiple-outline" color={color} size={size} />
           ),
           headerShown: false,
+          tabBarLabelStyle: { paddingBottom: 5 },
         }}
       />
     </BottomTab.Navigator>
+  );
+}
+
+const CommunityStack = createStackNavigator<CommunityStackParamList>();
+
+function CommunityStackNavigator() {
+  return (
+    <CommunityStack.Navigator>
+      <CommunityStack.Screen name="Community" component={CommunityScreen} options={{ headerShown: false }} />
+      <CommunityStack.Screen name="Posts" component={PostsScreen} options={{ headerShown: false }} />
+      <CommunityStack.Screen name="Post" component={PostScreen} options={{ headerShown: false }} />
+    </CommunityStack.Navigator>
   );
 }

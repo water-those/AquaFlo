@@ -9,7 +9,10 @@ export default function Icon(props: Props) {
   return (
     <View>
       <TouchableOpacity style={styles.circle}>
-        <Text style={styles.text}>{props.name}</Text>
+        <Text style={styles.text}>
+          {props.name.split(" ")[0].charAt(0)}
+          {props.name.split(" ")[1].charAt(0)}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -19,11 +22,11 @@ const styles = StyleSheet.create({
   text: {
     color: Colours.white,
     fontFamily: "SFProText-Semibold",
-    fontSize: 20,
+    fontSize: 18,
   },
   circle: {
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
     borderRadius: 40 / 2,
     backgroundColor: Colours.green,
     alignItems: "center",

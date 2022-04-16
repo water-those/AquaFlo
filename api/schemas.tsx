@@ -28,7 +28,7 @@ export let commentSchema = object({
   id: string(),
   text: string(),
   likes: number(),
-  author: object({ userSchema }),
+  author: userSchema,
 }).required();
 
 export let postSchema = object({
