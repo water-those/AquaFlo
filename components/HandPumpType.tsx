@@ -1,67 +1,22 @@
 import { Text, Image, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
+import { handpumpType } from "../screens/RepairScreen";
 interface Props {
-  handpump_type: string;
+  handpump: handpumpType;
+  onPress(): void;
+  selected: boolean;
 }
-const handpumps = {
-  india_mark_ii: {
-    handpump_name: "India Mark II",
-    uri: require("../assets/imk2.png"),
-  },
-  afridev: {
-    handpump_name: "Afridev",
-    uri: require("../assets/afridev.png"),
-  },
-  kardia: {
-    handpump_name: "Kardia",
-    uri: require("../assets/Kardia.png"),
-  },
-  vergnet: {
-    handpump_name: "Vergnet",
-    uri: require("../assets/Vergnet.png"),
-  },
-  volanta: {
-    handpump_name: "Volanta",
-    uri: require("../assets/Volanta.png"),
-  },
-  nira: {
-    handpump_name: "Nira",
-    uri: require("../assets/Nira.png"),
-  },
-};
 
 export default function HandPumpType(props: Props) {
-  let handpump = null;
-
-  switch (props.handpump_type) {
-    case "imk2":
-      handpump = handpumps.india_mark_ii;
-      break;
-    case "afridev":
-      handpump = handpumps.afridev;
-      break;
-    case "nira":
-      handpump = handpumps.nira;
-      break;
-    case "volanta":
-      handpump = handpumps.volanta;
-      break;
-    case "vergnet":
-      handpump = handpumps.vergnet;
-      break;
-    case "kardia":
-      handpump = handpumps.kardia;
-      break;
-    default:
-      handpump = handpumps.india_mark_ii;
-      break;
-  }
-
   return (
-    <TouchableOpacity style={styles.button}>
-      <Image style={styles.scale_image} source={handpump.uri} />
-      <Text style={styles.pump_name}>{handpump.handpump_name}</Text>
+    <TouchableOpacity style={styles.button} onPress={props.onPress}>
+      <Image
+        style={props.selected ? styles.scale_image : [styles.scale_image, styles.disabled]}
+        source={props.handpump.uri}
+      />
+      <Text style={props.selected ? styles.pump_name : [styles.pump_name, styles.disabled]}>
+        {props.handpump.handpump_name}
+      </Text>
     </TouchableOpacity>
   );
 }
@@ -84,5 +39,8 @@ const styles = StyleSheet.create({
     marginRight: 15,
     marginLeft: 15,
     textAlign: "center",
+  },
+  disabled: {
+    opacity: 0.3,
   },
 });

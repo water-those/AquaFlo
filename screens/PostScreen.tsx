@@ -20,8 +20,14 @@ export default function PostScreen() {
 
   return (
     <View style={styles.container}>
-      <TopBar title="Community" navigation={navigation}></TopBar>
+      <TopBar title={route.params.screenTitle} navigation={navigation}></TopBar>
       <ScrollView>
+        {route.params.trail.length == 0 ? (
+          <View />
+        ) : (
+          <Text style={styles.breadcrumbs}>{route.params.trail.join("  >  ")}</Text>
+        )}
+
         <View style={styles.questionContainer}>
           <Text style={styles.questionHeader}>Q.</Text>
           <Text style={styles.questionText}>
@@ -40,7 +46,7 @@ export default function PostScreen() {
 
         <Text style={styles.commentsHeader}>Community Contributions ({route.params.post.comments?.length})</Text>
         <View style={styles.addCommentContainer}>
-          <Icon name="John Doe" />
+          <Icon name="Mary Doe" />
           <TextInput
             style={styles.commentInput}
             onChangeText={onChangeCommentText}
@@ -89,6 +95,14 @@ function CommentComponent(props: CommentComponentProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  breadcrumbs: {
+    fontFamily: "SFProText-Semibold",
+    color: Colors.grey,
+    marginLeft: 15,
+    marginTop: 15,
+    marginBottom: -15,
+    fontSize: 12,
   },
   questionContainer: {
     flexDirection: "row",

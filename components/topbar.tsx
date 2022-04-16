@@ -25,7 +25,7 @@ export default function TopBar(props: Props) {
         </TouchableOpacity>
         <Text style={styles.text}>{props.title}</Text>
       </View>
-      <Icon name="John Doe" />
+      <Icon name="Mary Doe" />
     </View>
   );
 }

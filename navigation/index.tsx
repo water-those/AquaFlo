@@ -8,7 +8,7 @@ import CommunityScreen from "../screens/CommunityScreen";
 import PostsScreen from "../screens/PostsScreen";
 import PostScreen from "../screens/PostScreen";
 import LoginScreen from "../screens/LoginScreen";
-import { RootStackParamList, BottomTabParamList, CommunityStackParamList } from "../types";
+import { RootStackParamList, BottomTabParamList, CommunityStackParamList, RepairStackParamList } from "../types";
 
 /**
  * A stack navigator provides a way for your app to transition between screens
@@ -21,7 +21,7 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <RootStack.Navigator>
-        <RootStack.Screen name="Login" options={{ headerShown: false }} component={LoginScreen}></RootStack.Screen>
+        {/* <RootStack.Screen name="Login" options={{ headerShown: false }} component={LoginScreen}></RootStack.Screen> */}
         <RootStack.Screen name="BottomTabNavigator" options={{ headerShown: false }} component={BottomTabNavigator} />
       </RootStack.Navigator>
     </NavigationContainer>
@@ -48,8 +48,8 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Repair"
-        component={RepairScreen}
+        name="RepairNavigator"
+        component={RepairStackNavigator}
         options={{
           tabBarLabel: "Repair",
           tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="wrench-outline" color={color} size={size} />,
@@ -82,5 +82,17 @@ function CommunityStackNavigator() {
       <CommunityStack.Screen name="Posts" component={PostsScreen} options={{ headerShown: false }} />
       <CommunityStack.Screen name="Post" component={PostScreen} options={{ headerShown: false }} />
     </CommunityStack.Navigator>
+  );
+}
+
+const RepairStack = createStackNavigator<RepairStackParamList>();
+
+function RepairStackNavigator() {
+  return (
+    <RepairStack.Navigator>
+      <RepairStack.Screen name="Repair" component={RepairScreen} options={{ headerShown: false }} />
+      <RepairStack.Screen name="Posts" component={PostsScreen} options={{ headerShown: false }} />
+      <RepairStack.Screen name="Post" component={PostScreen} options={{ headerShown: false }} />
+    </RepairStack.Navigator>
   );
 }

@@ -20,8 +20,13 @@ export default function PostsScreen() {
 
   return (
     <View style={styles.container}>
-      <TopBar title="Repair" navigation={navigation}></TopBar>
+      <TopBar title={route.params.screenTitle} navigation={navigation}></TopBar>
       <ScrollView contentContainerStyle={{ marginBottom: 20 }}>
+        {route.params.trail.length == 0 ? (
+          <View />
+        ) : (
+          <Text style={styles.breadcrumbs}>{route.params.trail.join("  >  ")}</Text>
+        )}
         <View style={styles.searchContainer}>
           <View style={styles.searchBarContainer}>
             <Ionicons style={styles.searchIcon} name="search-outline" />
@@ -43,14 +48,22 @@ export default function PostsScreen() {
         </View>
 
         <View style={styles.postsHeaderContainer}>
-          <Text style={styles.postsHeaderText}>Posts({route.params.posts.length})</Text>
+          <Text style={styles.postsHeaderText}>Posts ({route.params.posts.length})</Text>
           <TouchableOpacity>
             <Text style={styles.postsFilterText}>Filter/Sort</Text>
           </TouchableOpacity>
         </View>
 
         {route.params.posts.map((post, index) => {
-          return <PostsItemComponent navigation={navigation} post={post} key={index} />;
+          return (
+            <PostsItemComponent
+              navigation={navigation}
+              post={post}
+              key={index}
+              trail={route.params.trail}
+              screenTitle={route.params.screenTitle}
+            />
+          );
         })}
       </ScrollView>
     </View>
@@ -60,6 +73,8 @@ export default function PostsScreen() {
 interface PostsItemComponentProps {
   post: Post;
   navigation: navigationProp;
+  trail: Array<string>;
+  screenTitle: string;
 }
 
 function PostsItemComponent(props: PostsItemComponentProps) {
@@ -68,6 +83,8 @@ function PostsItemComponent(props: PostsItemComponentProps) {
       onPress={() => {
         props.navigation.navigate("Post", {
           post: props.post,
+          trail: props.trail,
+          screenTitle: props.screenTitle,
         });
       }}
     >
@@ -91,6 +108,14 @@ function PostsItemComponent(props: PostsItemComponentProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  breadcrumbs: {
+    fontFamily: "SFProText-Semibold",
+    color: Colors.grey,
+    marginLeft: 15,
+    marginTop: 15,
+    marginBottom: 10,
+    fontSize: 12,
   },
   searchContainer: {
     flexDirection: "row",
