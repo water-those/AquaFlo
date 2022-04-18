@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, Image, TextInput, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from "react-native";
+import { Text, View, TextInput, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import Colors from "../constants/Colours";
 import { auth } from "../configs/firebase";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/core";
 import { RootStackParamList } from "../types";
 import { signUpHandler } from "../api/user";
+import SignupImage from "../components/SignupImage";
 
 export default function SignupScreen() {
   const [email, setEmail] = useState("");
@@ -23,7 +24,7 @@ export default function SignupScreen() {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Image source={require("../assets/Signupimg.png")} style={styles.signUpImg} />
+      <SignupImage />
       <View style={styles.contentView}>
         <Text style={styles.title}>Let's Get </Text>
         <Text style={styles.titleBold}>Started</Text>

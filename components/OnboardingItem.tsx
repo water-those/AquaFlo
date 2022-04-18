@@ -1,20 +1,12 @@
-import { View, Text, StyleSheet, Image, useWindowDimensions } from "react-native";
+import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
 import React from "react";
 import Colors from "../constants/Colours";
-// import onboardimage from "../assets/onboardingimg.png";
-// interface Props{
-//   id: string,
-//   title: string,
-//   description: string,
-//   image: string,
-// }
 
-export default function OnboardingItem({ item }) {
+export default function OnboardingItem({ item }: any) {
   const { width } = useWindowDimensions();
   return (
     <View style={[styles.container, { width }]}>
-      <Image source={item.image} style={[styles.image, { width, resizeMode: "contain" }]} />
-
+      {item.image}
       <View style={{ flex: 0.4 }}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>{item.description}</Text>
@@ -28,13 +20,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-
-  image: {
-    flex: 0.5,
-    justifyContent: "center",
-    marginTop: 60,
-    marginBottom: 60,
   },
 
   title: {

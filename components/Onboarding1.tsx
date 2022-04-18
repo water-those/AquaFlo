@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
-import { Text, Image, View, StyleSheet, TouchableOpacity, FlatList, Animated } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, FlatList, Animated } from "react-native";
 import Colors from "../constants/Colours";
 import slides from "../Data/slides";
 import OnboardingItem from "./OnboardingItem";
+import OnboardingLogo from "./OnboardingLogo";
 
 export default function Onboarding1Screen({ navigation }: any) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,7 +18,7 @@ export default function Onboarding1Screen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/onboardlogo.png")} style={styles.onboardlogo} />
+      <OnboardingLogo style={styles.onboardlogo} />
       <View style={{ flex: 3 }}>
         <FlatList
           data={slides}
@@ -53,20 +54,13 @@ export default function Onboarding1Screen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     height: "90%",
     borderColor: "#000000",
   },
 
   onboardlogo: {
-    marginTop: 90,
-    marginBottom: 0,
-  },
-
-  onboardingimg: {
-    width: 190,
-    height: 220,
-    marginBottom: 40,
+    marginTop: "10%",
   },
 
   buttonContainer: {
