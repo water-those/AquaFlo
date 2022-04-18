@@ -1,27 +1,15 @@
 import React, { useState, useRef } from "react";
-import {
-  Text,
-  Image,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-  Animated,
-} from "react-native";
+import { Text, Image, View, StyleSheet, TouchableOpacity, FlatList, Animated } from "react-native";
 import Colors from "../constants/Colours";
 import slides from "../Data/slides";
 import OnboardingItem from "./OnboardingItem";
-import LoginScreen from "../screens/LoginScreen";
-import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/core";
-import Navigation from "../navigation";
 
-export default function Onboarding1Screen({ navigation }) {
+export default function Onboarding1Screen({ navigation }: any) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef(null);
 
-  const viewableItemsChanged = useRef(({ viewableItems }) => {
+  const viewableItemsChanged = useRef(({ viewableItems }: any) => {
     setCurrentIndex(viewableItems[0].index);
   }).current;
 
@@ -29,10 +17,7 @@ export default function Onboarding1Screen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../assets/onboardlogo.png")}
-        style={styles.onboardlogo}
-      />
+      <Image source={require("../assets/onboardlogo.png")} style={styles.onboardlogo} />
       <View style={{ flex: 3 }}>
         <FlatList
           data={slides}
@@ -42,12 +27,9 @@ export default function Onboarding1Screen({ navigation }) {
           pagingEnabled
           bounces={false}
           keyExtractor={(item) => item.id}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-            {
-              useNativeDriver: false,
-            }
-          )}
+          onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], {
+            useNativeDriver: false,
+          })}
           scrollEventThrottle={32}
           onViewableItemsChanged={viewableItemsChanged}
           viewabilityConfig={viewConfig}
@@ -56,17 +38,11 @@ export default function Onboarding1Screen({ navigation }) {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Login")}
-          style={styles.button}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Signup")}
-          style={[styles.button, styles.buttonOutline]}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate("Signup")} style={[styles.button, styles.buttonOutline]}>
           <Text style={styles.buttonOutlineText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
@@ -108,7 +84,7 @@ const styles = StyleSheet.create({
   },
 
   buttonOutline: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.Background2,
     marginTop: 25,
     borderColor: Colors.blue,
     borderWidth: 2,

@@ -133,9 +133,9 @@ const styles = StyleSheet.create({
   },
   bottomtext: {
     fontWeight: "300",
+    color: Colors.grey,
   },
   register: {
-    fontWeight: "600",
     color: Colors.black,
   },
 });
