@@ -32,7 +32,6 @@ export default function SignupScreen() {
       <Text style={styles.subtitle}>Start contributing today!</Text>
 
       <View style={styles.inputContainer}>
-        <TextInput placeholder="Your Name" value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
         <TextInput
           placeholder="Your Email"
           value={email}
