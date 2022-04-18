@@ -16,8 +16,7 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/core";
 import Navigation from "../navigation";
 
-
-export default function Onboarding1Screen({navigation}) {
+export default function Onboarding1Screen({ navigation }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef(null);
@@ -27,7 +26,6 @@ export default function Onboarding1Screen({navigation}) {
   }).current;
 
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
-
 
   return (
     <View style={styles.container}>
@@ -40,7 +38,7 @@ export default function Onboarding1Screen({navigation}) {
           data={slides}
           renderItem={({ item }) => <OnboardingItem item={item} />}
           horizontal
-          showsHorizontalScrollIndicator ={false}
+          showsHorizontalScrollIndicator={false}
           pagingEnabled
           bounces={false}
           keyExtractor={(item) => item.id}
@@ -59,13 +57,14 @@ export default function Onboarding1Screen({navigation}) {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Login')}
-          style={styles.button}>
+          onPress={() => navigation.navigate("Login")}
+          style={styles.button}
+        >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate('Signup')}
+          onPress={() => navigation.navigate("Signup")}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Sign Up</Text>
