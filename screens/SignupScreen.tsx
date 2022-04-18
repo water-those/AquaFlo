@@ -38,6 +38,7 @@ export default function SignupScreen() {
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
+          autoCapitalize="none"
         />
         <TextInput
           placeholder="Password"
