@@ -31,16 +31,14 @@ export default function PostScreen() {
         <View style={styles.questionContainer}>
           <Text style={styles.questionHeader}>Q.</Text>
           <Text style={styles.questionText}>
-            Lorem ipsum dolor sit amet, consectetu adipiscing elit. Nam mattis ligula rutrum gravida gravida. Nullam
-            pharetra neque in orci scelerisque?
+          {route.params.post.question}
           </Text>
         </View>
 
         <View style={styles.answerContainer}>
           <Text style={styles.answerHeader}>A.</Text>
           <Text style={styles.answerText}>
-            Lorem ipsum dolor sit amet, consectetu adipiscing elit. Nam mattis ligula rutrum gravida gravida. Nullam
-            pharetra neque in orci scelerisque?
+            {route.params.post.answer}
           </Text>
         </View>
 
