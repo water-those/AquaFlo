@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/core";
 import { RootStackParamList } from "../types";
 import { loginHandler } from "../api/user";
 import Colours from "../constants/Colours";
+import { nominalTypeHack } from "prop-types";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -97,7 +98,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   input: {
-    backgroundColor: Colors.white,
     paddingHorizontal: 15,
     paddingVertical: 13,
     borderRadius: 8,
