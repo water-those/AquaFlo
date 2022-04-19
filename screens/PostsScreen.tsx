@@ -73,7 +73,7 @@ export default function PostsScreen() {
 interface PostsItemComponentProps {
   post: Post;
   navigation: navigationProp;
-  trail: Array<string>;
+  trail: Array<String>;
   screenTitle: string;
 }
 
