@@ -65,15 +65,17 @@ export default function LoginScreen() {
 
       <View style={styles.bottomButtonContainer}>
         <TouchableOpacity onPress={() => {}} style={styles.bottomButton}>
-          <View style={styles.contentView}>
+          <View style={[styles.contentView, {justifyContent: "space-between"}]}>
             <Image source={require("../assets/googleicon.png")} style={styles.buttonlogo} />
             <Text style={styles.bottomButtonText}>Login with Google</Text>
+            <View style={{width:18, height:18}}></View>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {}} style={styles.bottomButton}>
-          <View style={styles.contentView}>
+          <View style={[styles.contentView, {justifyContent: "space-between"}]}>
             <Image source={require("../assets/facebookicon.png")} style={styles.facebooklogo} />
             <Text style={styles.bottomButtonText}>Login with Facebook</Text>
+            <View style={{width:10, height:19}}></View>
           </View>
         </TouchableOpacity>
       </View>
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
     paddingBottom: "5%",
   },
   bottomButton: {
-    backgroundColor: "white",
+    
     paddingHorizontal: 20,
     paddingVertical: 10,
     paddingBottom: 20,
@@ -185,7 +187,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: 16,
     color: Colours.grey,
-    paddingLeft: 40,
+
   },
   bottomtext: {
     fontWeight: "300",
