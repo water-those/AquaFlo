@@ -1,6 +1,6 @@
 # AquaFlo
 
-AquaFlo was submitted to the ![2022 Xylem Global Student Innovation Challenge](https://xyleminnovationchallenge.bemyapp.com/), to address the following challenge statement:
+AquaFlo was submitted to the [2022 Xylem Global Student Innovation Challenge](https://xyleminnovationchallenge.bemyapp.com/), to address the following challenge statement:
 
 ```
 Approximately one million well hand pumps are installed across Africa. 
