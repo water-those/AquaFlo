@@ -1,7 +1,23 @@
 # AquaFlo
 
+AquaFlo was submitted to the ![2022 Xylem Global Student Innovation Challenge](https://xyleminnovationchallenge.bemyapp.com/), to address the following challenge statement:
+
+```
+Approximately one million well hand pumps are installed across Africa. 
+While they are relatively sturdy and easy to maintain, it is estimated that one-third of 
+these pumps are out of service at any given time, leaving entire communities 
+without reliable access to water. Some communities also face declining groundwater supplies. 
+
+Americares, a global health-focused nonprofit organization, is partnering with these communities. 
+Using publicly available data, you are asked to develop a solution that either: 
+
+- analyzes potential hand pump failure modes 
+- guides users on steps to take to repair the hand pumps 
+- assesses the long-term risks to groundwater supply
+```
+
 ## Demo
-Onboarding & Map            |  Repair & Community
+Onboarding & Map           |  Repair & Community
 :-------------------------:|:-------------------------:
 ![Demo1](https://user-images.githubusercontent.com/58123610/165380043-b02e32e7-117d-433e-b034-32fc5eb6352a.gif) | ![demo2](https://user-images.githubusercontent.com/58123610/165380063-b6f3781d-8ea5-40d5-82a5-4ff83560b3ae.gif)
 
