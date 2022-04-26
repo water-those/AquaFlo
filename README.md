@@ -1,4 +1,9 @@
-# Xylem Challenge App
+# AquaFlo
+
+## Demo
+Onboarding & Map            |  Repair & Community
+:-------------------------:|:-------------------------:
+![Demo1](https://user-images.githubusercontent.com/58123610/165380043-b02e32e7-117d-433e-b034-32fc5eb6352a.gif) | ![demo2](https://user-images.githubusercontent.com/58123610/165380063-b6f3781d-8ea5-40d5-82a5-4ff83560b3ae.gif)
 
 ## Getting Started
 
